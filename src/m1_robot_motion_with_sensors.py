@@ -16,8 +16,14 @@ def main():
     """ Calls the other functions to test/demo them. """
     run_test_wait_for_seconds()
     run_test_init()
-    run_test_go_and_stop()
-    run_test_go_straight_for_seconds()
+    # run_test_go_and_stop()
+    #
+    # wait_for_seconds(3)
+    #
+    # run_test_go_straight_for_seconds()
+    #
+    # wait_for_seconds(3)
+
     run_test_go_straight_for_inches()
     run_test_go_straight_until_black()
 
@@ -29,13 +35,13 @@ def run_test_wait_for_seconds():
     print('Testing the   wait_for_seconds   function:')
     print('--------------------------------------------------')
 
-    wait_for_seconds()
+    wait_for_seconds(3)
 
     print('Here is a second test:')
-    wait_for_seconds()
+    wait_for_seconds(3)
 
 
-def wait_for_seconds():
+def wait_for_seconds(x):
     """ Prints Hello, waits for 3 seconds, then prints Goodbye. """
     # -------------------------------------------------------------------------
     # DOne: 2. With your instructor, implement and test this function.
@@ -55,7 +61,7 @@ def wait_for_seconds():
     start = time.time()
     while True:
         end = time.time()
-        if end - start >= 3:
+        if end - start >= x:
             break
     print('Goodbye')
 
@@ -67,9 +73,10 @@ def run_test_init():
     print('Testing the   __init__   method of the SimpleRoseBot class:')
     print('--------------------------------------------------')
     # -------------------------------------------------------------------------
-    # TODO: 3. Implement this function, then implement the   __init__   method
+    # DONE: 3. Implement this function, then implement the   __init__   method
     #   of the SimpleRoseBot class, then use this function to test __init__.
     # -------------------------------------------------------------------------
+    SimpleRoseBot()
 
 
 def run_test_go_and_stop():
@@ -79,10 +86,11 @@ def run_test_go_and_stop():
     print('Testing the  go  and  stop  methods of the SimpleRoseBot class:')
     print('--------------------------------------------------')
     # -------------------------------------------------------------------------
-    # TODO: 4. Implement this function, then implement the   go  and   stop
+    # DONE: 4. Implement this function, then implement the   go  and   stop
     #   methods of the SimpleRoseBot class, then use this function
     #   to test both   go   and   stop   at the same time.
     # -------------------------------------------------------------------------
+    SimpleRoseBot().goStop()
 
 
 def run_test_go_straight_for_seconds():
@@ -92,10 +100,12 @@ def run_test_go_straight_for_seconds():
     print('Testing the   go_straight_for_seconds   method of SimpleRoseBot:')
     print('--------------------------------------------------')
     # -------------------------------------------------------------------------
-    # TODO: 5. Implement this function, then implement the
+    # DONE: 5. Implement this function, then implement the
     #   go_straight_for_seconds   method of the SimpleRoseBot class,
     #   then use this function to test that method.
     # -------------------------------------------------------------------------
+    SimpleRoseBot().goStraightForSeconds(2)
+
 
 
 def run_test_go_straight_for_inches():
@@ -105,10 +115,11 @@ def run_test_go_straight_for_inches():
     print('Testing the   go_straight_for_inches   method of SimpleRoseBot:')
     print('--------------------------------------------------')
     # -------------------------------------------------------------------------
-    # TODO: 6. Implement this function, then implement the
+    # DONE: 6. Implement this function, then implement the
     #   go_straight_for_inches   method of the SimpleRoseBot class,
     #   then use this function to test that method.
     # -------------------------------------------------------------------------
+    SimpleRoseBot().goStraightForInches(5)
 
 
 def run_test_go_straight_until_black():
@@ -128,7 +139,37 @@ def run_test_go_straight_until_black():
 # Put your   SimpleRoseBot    class here (below this comment).
 # Your instructor may help you get started.
 ###############################################################################
+class SimpleRoseBot(object):
 
+    def __init__(self):
+        self.LeftWheel = Motor('B')
+        self.RightWheel = Motor('C')
+        self.ColorSensor = ColorSensor(3)
+
+    def goStop(self):
+        self.LeftWheel.turn_on(7)
+        self.RightWheel.turn_on(77)
+        wait_for_seconds(2)
+        self.LeftWheel.turn_off()
+        self.RightWheel.turn_off()
+
+    def goStraightForSeconds(self, time):
+        self.LeftWheel.turn_on(77)
+        self.RightWheel.turn_on(77)
+        wait_for_seconds(time)
+        self.LeftWheel.turn_off()
+        self.RightWheel.turn_off()
+
+    def goStraightForInches(self, inches):
+        self.LeftWheel.turn_on(77)
+        self.RightWheel.turn_on(77)
+        start = self.RightWheel.get_position() * (3.14*1.3)/360
+        while True:
+            end  = self.RightWheel.get_position() * (3.14*1.3)/360
+            if end - start >= inches:
+                break
+        self.LeftWheel.turn_off()
+        self.RightWheel.turn_off()
 
 ###############################################################################
 # The  Motor   and   ColorSensor classes.  USE them, but do NOT modify them.
