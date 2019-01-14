@@ -78,7 +78,6 @@ def run_test_init():
     # -------------------------------------------------------------------------
     SimpleRoseBot()
 
-
 def run_test_go_and_stop():
     """ Tests the   go   and   stop   methods of the SimpleRoseBot class. """
     print()
